@@ -29,5 +29,8 @@ RUN pip install \
 
 RUN pip install "git+https://github.com/mateuslab-prot/cascadia-novotax.git"
 
+RUN mkdir -p /opt/models
+COPY cascadia.ckpt /opt/models/cascadia_model.ckpt
+
 ENTRYPOINT []
 CMD ["/bin/bash"]
