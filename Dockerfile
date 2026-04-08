@@ -12,6 +12,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     build-essential \
     bash \
+    libxrender1 \
+    libxext6 \
+    libsm6 \
+    libgl1 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN ln -sf /usr/bin/python3 /usr/local/bin/python && \
@@ -19,7 +23,8 @@ RUN ln -sf /usr/bin/python3 /usr/local/bin/python && \
 
 RUN pip install --upgrade pip wheel
 
-RUN pip install "git+https://github.com/mateuslab-prot/cascadia-novotax.git"
+RUN pip install --index-url https://download.pytorch.org/whl/cu118 \
+    "git+https://github.com/mateuslab-prot/cascadia-novotax.git"
 
 ENTRYPOINT []
 CMD ["/bin/bash"]
