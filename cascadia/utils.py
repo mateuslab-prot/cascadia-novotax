@@ -1,6 +1,5 @@
 from .depthcharge.tokenizers.peptides import PeptideTokenizer, Peptide,  _calc_precursor_mass, nb
 import numpy as np
-from pyteomics import mass
 import re
 
 def convert_mods_to_shifts(db, pep):
@@ -25,8 +24,6 @@ def convert_mods_to_shifts(db, pep):
 
 def write_results(preds, results_file, raw_file, isolation_window_size, score_threshold, time_width):
     pred_seqs, aa_conf, pep_conf, rts, precursors = [], [], [], [], []
-
-    unimod_db = mass.unimod.Unimod()
 
     for pred_seqs_c, _, pep_conf_c, aa_conf_c, rt_c, precursors_c in preds:
         pred_seqs.append(pred_seqs_c)
@@ -59,6 +56,5 @@ def write_results(preds, results_file, raw_file, isolation_window_size, score_th
               mz = mz / charge + 1.007276
               mz = mz / charge + 1.007276
               pred_mz = _calc_precursor_mass(nb.typed.List(Peptide.from_massivekb(pred).split()), charge, tokenizer.residues)
-              pred = convert_mods_to_shifts(unimod_db, pred)
               if np.abs(pred_mz - mz) < isolation_window_size:
                 out.write("\t".join([raw_file, str(idx), str(int(charge)), pred, 'UNKNOWN', str(conf), str(rt), str(rt-time_width), str(rt+time_width), str(pred_mz - mz)]) + '\n')
