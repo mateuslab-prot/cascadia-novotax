@@ -14,8 +14,10 @@ from .augment import *
 from datetime import datetime
 import warnings
 import json
-warnings.filterwarnings('ignore')
 
+torch.set_float32_matmul_precision('high')
+
+warnings.filterwarnings('ignore')
 
 def sequence():
   parser=argparse.ArgumentParser()
