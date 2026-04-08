@@ -23,8 +23,11 @@ RUN ln -sf /usr/bin/python3 /usr/local/bin/python && \
 
 RUN pip install --upgrade pip wheel
 
-RUN pip install --index-url https://download.pytorch.org/whl/cu118 \
-    "git+https://github.com/mateuslab-prot/cascadia-novotax.git"
+RUN pip install \
+    torch==2.5.1 \
+    --index-url https://download.pytorch.org/whl/cu118
+
+RUN pip install "git+https://github.com/mateuslab-prot/cascadia-novotax.git"
 
 ENTRYPOINT []
 CMD ["/bin/bash"]
